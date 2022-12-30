@@ -21,13 +21,16 @@ class messageMgr {
         let tmpData = message.data
         this.responseMessage(type,tmpData,client)
       });
-      client.on("close", () => {
-        console.log("客户端断开连接");
+      client.on("close", (e) => {
+        console.log("客户端断开连接",e);
       });
       client.on("error", () => {
         console.log("网络连接出错");
       });
     });
+    ws.onclose = function(e) {
+      console.log('断开的原因',e.code,e.reason,e.wasClean)
+    }
     websocket.listen(9500);
   }
 
